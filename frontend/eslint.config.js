@@ -1,3 +1,7 @@
 import { tanstackConfig } from '@tanstack/eslint-config'
 
-export default [...tanstackConfig]
+export default [
+  ...tanstackConfig,
+  // global ignores
+  { ignores: ['**/*.gen.ts'] },
+]
