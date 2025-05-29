@@ -12,12 +12,19 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as gfeTestimonialCardImport } from './routes/(gfe)/testimonial-card'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const gfeTestimonialCardRoute = gfeTestimonialCardImport.update({
+  id: '/(gfe)/testimonial-card',
+  path: '/testimonial-card',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +39,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/(gfe)/testimonial-card': {
+      id: '/(gfe)/testimonial-card'
+      path: '/testimonial-card'
+      fullPath: '/testimonial-card'
+      preLoaderRoute: typeof gfeTestimonialCardImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/testimonial-card': typeof gfeTestimonialCardRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/testimonial-card': typeof gfeTestimonialCardRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/(gfe)/testimonial-card': typeof gfeTestimonialCardRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/testimonial-card'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/testimonial-card'
+  id: '__root__' | '/' | '/(gfe)/testimonial-card'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  gfeTestimonialCardRoute: typeof gfeTestimonialCardRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  gfeTestimonialCardRoute: gfeTestimonialCardRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/(gfe)/testimonial-card"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/(gfe)/testimonial-card": {
+      "filePath": "(gfe)/testimonial-card.tsx"
     }
   }
 }
