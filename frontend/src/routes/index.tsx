@@ -15,7 +15,6 @@ function App() {
           <li>
             <Link
               to="/testimonial-card"
-              target="_blank"
               className="text-cyan-300 hover:underline"
             >
               Testimonial Card
