@@ -12,12 +12,26 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as MathIndexImport } from './routes/math/index'
+import { Route as GfeTestimonialCardRouteImport } from './routes/_gfe/testimonial-card/route'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MathIndexRoute = MathIndexImport.update({
+  id: '/math/',
+  path: '/math/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GfeTestimonialCardRouteRoute = GfeTestimonialCardRouteImport.update({
+  id: '/_gfe/testimonial-card',
+  path: '/testimonial-card',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +46,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_gfe/testimonial-card': {
+      id: '/_gfe/testimonial-card'
+      path: '/testimonial-card'
+      fullPath: '/testimonial-card'
+      preLoaderRoute: typeof GfeTestimonialCardRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/math/': {
+      id: '/math/'
+      path: '/math'
+      fullPath: '/math'
+      preLoaderRoute: typeof MathIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/testimonial-card': typeof GfeTestimonialCardRouteRoute
+  '/math': typeof MathIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/testimonial-card': typeof GfeTestimonialCardRouteRoute
+  '/math': typeof MathIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_gfe/testimonial-card': typeof GfeTestimonialCardRouteRoute
+  '/math/': typeof MathIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/testimonial-card' | '/math'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/testimonial-card' | '/math'
+  id: '__root__' | '/' | '/_gfe/testimonial-card' | '/math/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GfeTestimonialCardRouteRoute: typeof GfeTestimonialCardRouteRoute
+  MathIndexRoute: typeof MathIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GfeTestimonialCardRouteRoute: GfeTestimonialCardRouteRoute,
+  MathIndexRoute: MathIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +115,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/_gfe/testimonial-card",
+        "/math/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/_gfe/testimonial-card": {
+      "filePath": "_gfe/testimonial-card/route.tsx"
+    },
+    "/math/": {
+      "filePath": "math/index.tsx"
     }
   }
 }
