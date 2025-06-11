@@ -1,5 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
+import { Link, createFileRoute } from '@tanstack/react-router'
+import Header from '../components/Header'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -7,33 +7,21 @@ export const Route = createFileRoute('/')({
 
 function App() {
   return (
-    <div className="text-center">
-      <header className="flex min-h-screen flex-col items-center justify-center bg-[#282c34] text-[calc(10px+2vmin)] text-white">
-        <img
-          src={logo}
-          className="pointer-events-none h-[40vmin] animate-[spin_20s_linear_infinite]"
-          alt="logo"
-        />
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="grow bg-neutral-900 text-center text-2xl">
+        <h1 className="my-8 text-4xl font-bold text-neutral-50">Projects</h1>
+        <ul>
+          <li>
+            <Link
+              to="/testimonial-card"
+              className="text-cyan-300 hover:underline"
+            >
+              Testimonial Card
+            </Link>
+          </li>
+        </ul>
+      </main>
     </div>
   )
 }
