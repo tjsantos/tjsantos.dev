@@ -3,7 +3,7 @@ import { AttributionCorner } from '../-components/AttributionCorner.tsx'
 import profileThumbnail from './profile-thumbnail.png'
 import { TestimonialCard } from './-components/TestimonialCard.tsx'
 
-export const Route = createFileRoute('/_gfe/testimonial-card')({
+export const Route = createFileRoute('/_gfe/testimonial-card/')({
   component: RouteComponent,
 })
 
