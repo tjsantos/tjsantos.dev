@@ -4,3 +4,6 @@ dist
 dist-ssr
 *.local
 /src/routes/**/-starters/
+
+*storybook.log
+storybook-static
