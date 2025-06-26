@@ -1,3 +1,4 @@
+import { defaultCard } from '..'
 import { TestimonialCard } from './TestimonialCard'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
@@ -17,28 +18,19 @@ type Story = StoryObj<typeof meta>
 // - fix name overflow
 
 export const Default: Story = {
-  args: {
-    name: 'Sarah Dole',
-    username: '@sarahdole',
-    imageUrl: 'imageUrl',
-    text: "I've been searching for high-quality abstract images for my design projects, and I'm thrilled to have found this platform. The variety and depth of creativity are astounding!",
-  },
+  args: defaultCard,
 }
 
 export const VeryLongName: Story = {
   args: {
+    ...Default.args,
     name: 'Someone with a very long name',
-    username: '@sarahdole',
-    imageUrl: 'imageUrl',
-    text: "I've been searching for high-quality abstract images for my design projects, and I'm thrilled to have found this platform. The variety and depth of creativity are astounding!",
   },
 }
 
 export const ImageAltText: Story = {
   args: {
-    name: 'Someone with a very long name',
-    username: '@sarahdole',
+    ...VeryLongName.args,
     imageUrl: 'no image alt text',
-    text: "I've been searching for high-quality abstract images for my design projects, and I'm thrilled to have found this platform. The variety and depth of creativity are astounding!",
   },
 }
