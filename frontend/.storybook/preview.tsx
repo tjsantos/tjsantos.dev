@@ -20,10 +20,10 @@ const preview: Preview = {
     },
   },
   decorators: [
-    // NOTE: can only have one theme from addon-themes, so instead use:
+    // NOTE: can only have one theme from @storybook/addon-themes, so instead use:
     // https://storybook.js.org/docs/essentials/toolbars-and-globals
 
-    // dark mode switcher (tailwind css class)
+    // addon-themes dark mode switcher (tailwind custom variant css class)
     withThemeByClassName<ReactRenderer>({
       themes: {
         light: '',
@@ -31,9 +31,18 @@ const preview: Preview = {
       },
       defaultTheme: 'light',
     }),
+    // font switcher
+    (Story, context) => {
+      const fontClass = context.globals.font
+      return (
+        <div className={fontClass}>
+          <Story />
+        </div>
+      )
+    },
   ],
   globalTypes: {
-    // font switcher
+    // font switcher (tailwind css class)
     font: {
       description: 'Global font setting',
       toolbar: {
@@ -51,7 +60,7 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    font: 'font-mono',
+    font: 'font-noto-sans',
   },
 }
 
