@@ -1,6 +1,7 @@
-import type { Preview } from '@storybook/react-vite'
+import type { Preview, ReactRenderer } from '@storybook/react-vite'
 
 import '../src/styles.css'
+import { withThemeByClassName } from '@storybook/addon-themes'
 
 const preview: Preview = {
   parameters: {
@@ -17,6 +18,40 @@ const preview: Preview = {
       // 'off' - skip a11y checks entirely
       test: 'todo',
     },
+  },
+  decorators: [
+    // NOTE: can only have one theme from addon-themes, so instead use:
+    // https://storybook.js.org/docs/essentials/toolbars-and-globals
+
+    // dark mode switcher (tailwind css class)
+    withThemeByClassName<ReactRenderer>({
+      themes: {
+        light: '',
+        dark: 'dark',
+      },
+      defaultTheme: 'light',
+    }),
+  ],
+  globalTypes: {
+    // font switcher
+    font: {
+      description: 'Global font setting',
+      toolbar: {
+        title: 'Font',
+        icon: 'type', // aka @storybook/icons TypeIcon
+        items: [
+          { value: 'font-noto-sans', title: 'Noto Sans' },
+          { value: 'font-sans', title: 'Sans Serif' },
+          { value: 'font-serif', title: 'Serif' },
+          { value: 'font-mono', title: 'Monospace' },
+        ],
+        // Change title based on selected value
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    font: 'font-mono',
   },
 }
 
