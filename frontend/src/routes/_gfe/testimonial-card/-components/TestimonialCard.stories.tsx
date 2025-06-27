@@ -1,4 +1,4 @@
-import { defaultCard } from '..'
+import { defaultCard } from './TestimonialCardPage'
 import { TestimonialCard } from './TestimonialCard'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
@@ -14,7 +14,6 @@ type Story = StoryObj<typeof meta>
 
 // TODO
 // - fix image alt text
-// - fix imageUrl
 // - fix name overflow
 
 export const Default: Story = {
