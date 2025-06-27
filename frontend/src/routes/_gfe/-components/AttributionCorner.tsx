@@ -38,18 +38,22 @@ export const AttributionThemeProvider = ({
 }
 
 export const useAttributionTheme = () => {
-  return useContext(AttributionThemeContext)
+  const context = useContext(AttributionThemeContext)
+  if (!context) {
+    throw new Error(
+      'useAttributionTheme must be used within its context provider',
+    )
+  }
+
+  return context
 }
 
 type AttributionCornerProps = {
   theme?: Theme
 }
 export const AttributionCorner = ({
-  theme: propTheme,
+  theme = 'light',
 }: AttributionCornerProps) => {
-  const themeContext = useAttributionTheme()
-  const theme = propTheme ?? themeContext?.theme ?? 'light'
-
   return (
     <div
       className={`fixed right-4 bottom-4 text-xs ${textColors[theme]}`}
