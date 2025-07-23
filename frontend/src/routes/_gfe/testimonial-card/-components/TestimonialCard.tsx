@@ -15,8 +15,8 @@ export const TestimonialCard = ({
 }: TestimonialCardProps) => {
   return (
     <div className="w-[340px] max-w-full rounded-lg bg-white p-6 text-neutral-600 shadow-sm">
-      <header className="flex gap-4">
-        <figure className="size-12 flex-none overflow-hidden text-xs wrap-break-word">
+      <header className="flex items-center gap-4">
+        <figure className="line-clamp-3 size-12 flex-none text-xs wrap-break-word">
           <img
             src={imageUrl}
             alt={name}
@@ -24,10 +24,11 @@ export const TestimonialCard = ({
             className="size-full rounded-full object-cover"
           />
         </figure>
-        {/* need min width on flex item to truncate child properly */}
-        <div className="min-w-1 grow">
+        {/* need min width on flex item to stop overflow, or
+            use overflow-wrap: anywhere instead of break-word */}
+        <div className="grow">
           <h2
-            className="truncate text-lg font-semibold text-neutral-900"
+            className="text-lg font-semibold wrap-anywhere text-neutral-900"
             title={name}
           >
             {name}
