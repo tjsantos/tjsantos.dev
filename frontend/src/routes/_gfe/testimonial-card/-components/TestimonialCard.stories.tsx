@@ -21,8 +21,6 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-// TODO: make long name and image alt text more accessible
-
 export const Default: Story = {
   args: {
     name: 'Sarah Dole',
@@ -35,7 +33,7 @@ export const Default: Story = {
 export const VeryLongName: Story = {
   args: {
     ...Default.args,
-    name: 'Someone with a very long name',
+    name: 'SomeoneWithAVeryLongName',
   },
 }
 
