@@ -17,8 +17,10 @@ const AttributionContainer = () => {
 function RouteComponent() {
   return (
     <AttributionThemeProvider initialTheme="light">
-      <Outlet />
-      <AttributionContainer />
+      <div className="font-noto-sans">
+        <Outlet />
+        <AttributionContainer />
+      </div>
     </AttributionThemeProvider>
   )
 }

@@ -12,6 +12,8 @@ const preview: Preview = {
       },
     },
 
+    layout: 'fullscreen',
+
     viewport: {
       options: {
         mobile: {
