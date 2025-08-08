@@ -10,6 +10,8 @@ export function BlogCardPage({ children }: { children: ReactNode }) {
 }
 
 // green-50,200,700, neutral-600,900, indigo-700
+// TODO: border instead of outline
+// TODO: rename shadow-card to shadow-blog-card (BEM style) or use inline style
 export function BlogCard({
   title,
   description,

@@ -1,7 +1,11 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
+import storybook from 'eslint-plugin-storybook'
 import { tanstackConfig } from '@tanstack/eslint-config'
+import pluginRouter from '@tanstack/eslint-plugin-router'
 
-export default [...tanstackConfig, // global ignores
-{ ignores: ['**/*.gen.ts'] }, ...storybook.configs["flat/recommended"]];
+export default [
+  ...tanstackConfig,
+  ...pluginRouter.configs['flat/recommended'],
+  ...storybook.configs['flat/recommended'],
+  { ignores: ['**/*.gen.ts'] },
+]
