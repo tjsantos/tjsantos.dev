@@ -39,7 +39,7 @@ export function BlogCard({
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="text-v3-green-700 inset-ring-v3-green-200 rounded-full bg-green-50 px-2 py-0.5 text-sm inset-ring"
+                className="text-green-700-v3 inset-ring-green-200-v3 rounded-full bg-green-50 px-2 py-0.5 text-sm inset-ring"
               >
                 {tag}
               </span>
@@ -54,8 +54,8 @@ export function BlogCard({
             aria-disabled={!url}
             className={twJoin(
               url
-                ? 'text-v3-indigo-700 focus:shadow-blog-card__button'
-                : 'text-v3-neutral-400 pointer-events-none select-none',
+                ? 'text-indigo-700-v3 focus:shadow-blog-card__button'
+                : 'text-neutral-400-v3 pointer-events-none select-none',
               'flex flex-wrap items-center gap-1.5 self-start rounded-sm',
             )}
           >
