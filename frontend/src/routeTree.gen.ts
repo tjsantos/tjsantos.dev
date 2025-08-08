@@ -8,75 +8,99 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as GfeRouteRouteImport } from './routes/_gfe/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as GfeTestimonialCardIndexRouteImport } from './routes/_gfe/testimonial-card/index'
+import { Route as GfeBlogCardIndexRouteImport } from './routes/_gfe/blog-card/index'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as GfeRouteImport } from './routes/_gfe/route'
-import { Route as IndexImport } from './routes/index'
-import { Route as GfeTestimonialCardIndexImport } from './routes/_gfe/testimonial-card/index'
-import { Route as GfeBlogCardIndexImport } from './routes/_gfe/blog-card/index'
-
-// Create/Update Routes
-
-const GfeRouteRoute = GfeRouteImport.update({
+const GfeRouteRoute = GfeRouteRouteImport.update({
   id: '/_gfe',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const GfeTestimonialCardIndexRoute = GfeTestimonialCardIndexImport.update({
+const GfeTestimonialCardIndexRoute = GfeTestimonialCardIndexRouteImport.update({
   id: '/testimonial-card/',
   path: '/testimonial-card/',
   getParentRoute: () => GfeRouteRoute,
 } as any)
-
-const GfeBlogCardIndexRoute = GfeBlogCardIndexImport.update({
+const GfeBlogCardIndexRoute = GfeBlogCardIndexRouteImport.update({
   id: '/blog-card/',
   path: '/blog-card/',
   getParentRoute: () => GfeRouteRoute,
 } as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/blog-card': typeof GfeBlogCardIndexRoute
+  '/testimonial-card': typeof GfeTestimonialCardIndexRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/blog-card': typeof GfeBlogCardIndexRoute
+  '/testimonial-card': typeof GfeTestimonialCardIndexRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_gfe': typeof GfeRouteRouteWithChildren
+  '/_gfe/blog-card/': typeof GfeBlogCardIndexRoute
+  '/_gfe/testimonial-card/': typeof GfeTestimonialCardIndexRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/blog-card' | '/testimonial-card'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/blog-card' | '/testimonial-card'
+  id:
+    | '__root__'
+    | '/'
+    | '/_gfe'
+    | '/_gfe/blog-card/'
+    | '/_gfe/testimonial-card/'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  GfeRouteRoute: typeof GfeRouteRouteWithChildren
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
     '/_gfe': {
       id: '/_gfe'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof GfeRouteImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof GfeRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_gfe/blog-card/': {
-      id: '/_gfe/blog-card/'
-      path: '/blog-card'
-      fullPath: '/blog-card'
-      preLoaderRoute: typeof GfeBlogCardIndexImport
-      parentRoute: typeof GfeRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_gfe/testimonial-card/': {
       id: '/_gfe/testimonial-card/'
       path: '/testimonial-card'
       fullPath: '/testimonial-card'
-      preLoaderRoute: typeof GfeTestimonialCardIndexImport
-      parentRoute: typeof GfeRouteImport
+      preLoaderRoute: typeof GfeTestimonialCardIndexRouteImport
+      parentRoute: typeof GfeRouteRoute
+    }
+    '/_gfe/blog-card/': {
+      id: '/_gfe/blog-card/'
+      path: '/blog-card'
+      fullPath: '/blog-card'
+      preLoaderRoute: typeof GfeBlogCardIndexRouteImport
+      parentRoute: typeof GfeRouteRoute
     }
   }
 }
-
-// Create and export the route tree
 
 interface GfeRouteRouteChildren {
   GfeBlogCardIndexRoute: typeof GfeBlogCardIndexRoute
@@ -92,84 +116,10 @@ const GfeRouteRouteWithChildren = GfeRouteRoute._addFileChildren(
   GfeRouteRouteChildren,
 )
 
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '': typeof GfeRouteRouteWithChildren
-  '/blog-card': typeof GfeBlogCardIndexRoute
-  '/testimonial-card': typeof GfeTestimonialCardIndexRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '': typeof GfeRouteRouteWithChildren
-  '/blog-card': typeof GfeBlogCardIndexRoute
-  '/testimonial-card': typeof GfeTestimonialCardIndexRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/_gfe': typeof GfeRouteRouteWithChildren
-  '/_gfe/blog-card/': typeof GfeBlogCardIndexRoute
-  '/_gfe/testimonial-card/': typeof GfeTestimonialCardIndexRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/blog-card' | '/testimonial-card'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/blog-card' | '/testimonial-card'
-  id:
-    | '__root__'
-    | '/'
-    | '/_gfe'
-    | '/_gfe/blog-card/'
-    | '/_gfe/testimonial-card/'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  GfeRouteRoute: typeof GfeRouteRouteWithChildren
-}
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GfeRouteRoute: GfeRouteRouteWithChildren,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/_gfe"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/_gfe": {
-      "filePath": "_gfe/route.tsx",
-      "children": [
-        "/_gfe/blog-card/",
-        "/_gfe/testimonial-card/"
-      ]
-    },
-    "/_gfe/blog-card/": {
-      "filePath": "_gfe/blog-card/index.tsx",
-      "parent": "/_gfe"
-    },
-    "/_gfe/testimonial-card/": {
-      "filePath": "_gfe/testimonial-card/index.tsx",
-      "parent": "/_gfe"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

@@ -3,7 +3,7 @@ import './BlogCard.css'
 
 export function BlogCardPage({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-lvh bg-linear-163 from-gray-50 to-gray-300 px-[17.5px] pt-[120px]">
+    <div className="min-h-lvh bg-linear-163 from-gray-50 to-gray-300 px-[17.5px] py-30">
       <div className="flex justify-center">{children}</div>
     </div>
   )
@@ -24,7 +24,7 @@ export function BlogCard({
   imageUrl: string
 }) {
   return (
-    <div className="shadow-card flex w-85 flex-col rounded-lg bg-white text-neutral-600">
+    <div className="shadow-blog-card flex w-85 flex-col rounded-lg bg-white text-neutral-600">
       <figure>
         <img
           src={imageUrl}

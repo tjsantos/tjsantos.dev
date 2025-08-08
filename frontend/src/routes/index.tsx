@@ -20,6 +20,11 @@ function App() {
               Testimonial Card
             </Link>
           </li>
+          <li>
+            <Link to="/blog-card" className="text-sky-600 hover:underline">
+              Blog Card
+            </Link>
+          </li>
         </ul>
       </main>
     </div>
