@@ -1,3 +1,5 @@
+import { RiArrowRightLine } from 'react-icons/ri'
+import { twJoin } from 'tailwind-merge'
 import type { ReactNode } from 'react'
 import './BlogCard.css'
 
@@ -9,18 +11,17 @@ export function BlogCardPage({ children }: { children: ReactNode }) {
   )
 }
 
-// green-50,200,700, neutral-600,900, indigo-700
-// TODO: border instead of outline
-// TODO: rename shadow-card to shadow-blog-card (BEM style) or use inline style
 export function BlogCard({
   title,
   description,
   tags,
+  url,
   imageUrl,
 }: {
   title: string
   description: string
   tags: Array<string>
+  url?: string
   imageUrl: string
 }) {
   return (
@@ -34,21 +35,33 @@ export function BlogCard({
       </figure>
       <div className="flex flex-col gap-3 px-4 py-6">
         <div className="flex flex-col gap-2">
-          <div>
+          <div className="flex flex-wrap gap-1">
             {tags.map((tag) => (
-              <button
+              <span
                 key={tag}
-                className="rounded-full bg-green-50 px-2 py-0.5 text-sm text-[#15803d] outline -outline-offset-1 outline-[#bbf7d0]"
+                className="text-v3-green-700 inset-ring-v3-green-200 rounded-full bg-green-50 px-2 py-0.5 text-sm inset-ring"
               >
                 {tag}
-              </button>
+              </span>
             ))}
           </div>
           <h2 className="text-lg font-semibold text-neutral-900">{title}</h2>
         </div>
         <div className="gap flex flex-col gap-6 font-medium">
           <p>{description}</p>
-          <p>Read more ...</p>
+          <a
+            href={url}
+            aria-disabled={!url}
+            className={twJoin(
+              url
+                ? 'text-v3-indigo-700 focus:shadow-blog-card__button'
+                : 'text-v3-neutral-400 pointer-events-none select-none',
+              'flex flex-wrap items-center gap-1.5 self-start rounded-sm',
+            )}
+          >
+            <span className="px-0.5">Read more</span>
+            <RiArrowRightLine className="size-5" />
+          </a>
         </div>
       </div>
     </div>

@@ -27,6 +27,22 @@ export const Default: Story = {
     description:
       'Curated vibrants colors for your living, make it pop & calm in the same time.',
     tags: ['Interior'],
+    url: '#',
     imageUrl: cardImage,
+  },
+}
+
+export const NoUrl: Story = {
+  args: {
+    ...Default.args,
+    url: undefined,
+  },
+}
+
+export const MultilineHeader: Story = {
+  args: {
+    ...Default.args,
+    title: 'Even More Living Room Inspirations',
+    tags: ['Interior', 'Exterior', 'Outdoors', 'Home', 'Inexpensive', 'Nature'],
   },
 }
