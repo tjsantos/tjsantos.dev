@@ -32,6 +32,13 @@ export const Default: Story = {
   },
 }
 
+export const NoImage: Story = {
+  args: {
+    ...Default.args,
+    imageUrl: 'no image',
+  },
+}
+
 export const NoUrl: Story = {
   args: {
     ...Default.args,

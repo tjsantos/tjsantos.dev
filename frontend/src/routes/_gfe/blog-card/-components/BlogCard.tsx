@@ -26,12 +26,12 @@ export function BlogCard({
 }) {
   return (
     <div className="shadow-blog-card flex w-85 flex-col rounded-lg bg-white text-neutral-600">
-      <figure>
+      <figure className="aspect-square w-full">
         <img
           src={imageUrl}
-          width={340}
-          height={340}
-          alt="Living room, nicely decorated"
+          alt={title}
+          decoding="async"
+          loading="lazy"
           className="size-full rounded-t-lg object-cover"
         />
       </figure>
