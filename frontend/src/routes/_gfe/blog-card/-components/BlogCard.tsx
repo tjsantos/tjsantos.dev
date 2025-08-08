@@ -29,6 +29,8 @@ export function BlogCard({
       <figure>
         <img
           src={imageUrl}
+          width={340}
+          height={340}
           alt="Living room, nicely decorated"
           className="size-full rounded-t-lg object-cover"
         />
@@ -51,6 +53,7 @@ export function BlogCard({
           <p>{description}</p>
           <a
             href={url}
+            role="link"
             aria-disabled={!url}
             className={twJoin(
               url
