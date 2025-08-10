@@ -55,7 +55,7 @@ export function BlogCard({
             aria-disabled={!url}
             className={twJoin(
               url
-                ? 'text-indigo-700-v3 focus:shadow-blog-card__button'
+                ? 'text-indigo-700-v3 hover:text-indigo-800-v3 focus:shadow-blog-card__button'
                 : 'text-neutral-400-v3 pointer-events-none select-none',
               'flex flex-wrap items-center gap-1.5 self-start rounded-sm',
             )}
