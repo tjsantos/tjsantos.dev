@@ -1,0 +1,8 @@
+@import 'tailwindcss' source(none);
+@source './';
+
+@theme {
+  --shadow-blog-card:
+    0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  --shadow-blog-card__button: 0 0 0 4px rgb(68 76 231 / 0.12);
+}
