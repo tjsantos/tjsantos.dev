@@ -5,7 +5,7 @@ import './BlogCard.css'
 
 export function BlogCardPage({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-lvh bg-linear-163 from-gray-50 to-gray-300 px-[17.5px] py-30">
+    <div className="min-h-lvh bg-linear-163 from-gray-50 to-[#d2d6db] px-[17.5px] py-30">
       <div className="flex justify-center">{children}</div>
     </div>
   )
@@ -25,31 +25,29 @@ export function BlogCard({
   imageUrl: string
 }) {
   return (
-    <div className="shadow-blog-card flex w-85 flex-col rounded-lg bg-white text-neutral-600">
-      <figure className="aspect-square w-full">
-        <img
-          src={imageUrl}
-          alt={title}
-          decoding="async"
-          loading="lazy"
-          className="size-full rounded-t-lg object-cover"
-        />
-      </figure>
-      <div className="flex flex-col gap-3 px-4 py-6">
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-wrap gap-1">
+    <article className="shadow-blog-card flex w-85 flex-col rounded-lg bg-white text-neutral-600">
+      <img
+        src={imageUrl}
+        alt={title}
+        decoding="async"
+        loading="lazy"
+        className="h-72 w-full rounded-t-lg object-cover"
+      />
+      <section className="flex flex-col gap-3 px-4 py-6">
+        <header className="flex flex-col gap-2">
+          <ul className="flex flex-wrap gap-1">
             {tags.map((tag) => (
-              <span
+              <li
                 key={tag}
                 className="text-green-700-v3 inset-ring-green-200-v3 rounded-full bg-green-50 px-2 py-0.5 text-sm inset-ring"
               >
                 {tag}
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
           <h2 className="text-lg font-semibold text-neutral-900">{title}</h2>
-        </div>
-        <div className="gap flex flex-col gap-6 font-medium">
+        </header>
+        <section className="gap flex flex-col gap-6 font-medium">
           <p>{description}</p>
           <a
             href={url}
@@ -65,8 +63,8 @@ export function BlogCard({
             <span className="px-0.5">Read more</span>
             <RiArrowRightLine className="size-5" />
           </a>
-        </div>
-      </div>
-    </div>
+        </section>
+      </section>
+    </article>
   )
 }
