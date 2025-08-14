@@ -25,13 +25,13 @@ export function BlogCard({
   imageUrl: string
 }) {
   return (
-    <article className="shadow-blog-card flex w-85 flex-col rounded-lg bg-white text-neutral-600">
+    <article className="shadow-blog-card flex w-85 flex-col overflow-hidden rounded-lg bg-white text-neutral-600">
       <img
         src={imageUrl}
         alt={title}
         decoding="async"
         loading="lazy"
-        className="h-72 w-full rounded-t-lg object-cover"
+        className="flex h-72 w-full items-center justify-center object-cover"
       />
       <section className="flex flex-col gap-3 px-4 py-6">
         <header className="flex flex-col gap-2">
