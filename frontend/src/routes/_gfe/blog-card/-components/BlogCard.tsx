@@ -28,7 +28,7 @@ export function BlogCard({
     <article className="shadow-blog-card flex w-85 flex-col overflow-hidden rounded-lg bg-white text-neutral-600">
       <img
         src={imageUrl}
-        alt={title}
+        alt="Blog card preview image"
         decoding="async"
         loading="lazy"
         className="flex h-72 w-full items-center justify-center object-cover"
