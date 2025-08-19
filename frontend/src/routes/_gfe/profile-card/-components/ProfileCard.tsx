@@ -1,4 +1,12 @@
 import './ProfileCard.css'
+import {
+  RiGithubFill,
+  RiInstagramFill,
+  RiLinkedinBoxFill,
+  RiTwitterXFill,
+} from 'react-icons/ri'
+import { twJoin } from 'tailwind-merge'
+import type { CSSProperties } from 'react'
 
 export function ProfileCardPage({ children }: { children: React.ReactNode }) {
   return (
@@ -25,7 +33,15 @@ type ProfileCardProps = {
 }
 export function ProfileCard(props: ProfileCardProps) {
   return (
-    <article className="shadow-profile-card flex w-85 flex-col gap-10 rounded-lg bg-white px-4 py-6 text-center text-neutral-600">
+    <article
+      className="flex w-85 flex-col gap-10 rounded-lg bg-white px-4 py-6 text-center text-neutral-600 shadow-(--shadow-profile-card)"
+      style={
+        {
+          '--shadow-profile-card':
+            '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.06)',
+        } as CSSProperties
+      }
+    >
       <section className="flex flex-col items-center gap-6">
         <img
           className="aspect-square w-16 rounded-full object-cover"
@@ -42,27 +58,38 @@ export function ProfileCard(props: ProfileCardProps) {
       </section>
       <section className="flex flex-col gap-6">
         <a
-          href={props.profileUrl}
+          href={props.profileUrl || undefined}
           role="link"
           aria-disabled={!props.profileUrl}
-          className="rounded-sm bg-indigo-700-v3 px-4 py-2.5 font-medium text-white"
+          className={twJoin(
+            'rounded-sm px-4 py-2.5 font-medium',
+            props.profileUrl
+              ? 'bg-indigo-700-v3 text-white shadow-(--shadow-profile-card) hover:bg-indigo-800-v3 focus:ring-4 focus:ring-[rgb(68,76,231,0.12)]'
+              : 'pointer-events-none bg-neutral-100 text-neutral-400 select-none',
+          )}
         >
           Contact me
         </a>
         <ul className="flex flex-wrap items-center justify-center gap-4">
-          {['github', 'linkedin', 'instagram', 'twitter']
-            .filter((key) => props.socialLinks?.[key])
-            .map((key) => {
-              const icons = {}
-              const url = props.socialLinks?.[key]
+          {[
+            { platform: 'github', Icon: RiGithubFill },
+            { platform: 'linkedin', Icon: RiLinkedinBoxFill },
+            { platform: 'instagram', Icon: RiInstagramFill },
+            { platform: 'twitter', Icon: RiTwitterXFill },
+          ]
+            .filter(({ platform }) => props.socialLinks?.[platform])
+            .map(({ platform, Icon }) => {
+              const url = props.socialLinks?.[platform]
               return (
-                <li key={key}>
+                <li key={platform}>
                   <a
-                    className="inline-block size-9 bg-amber-200"
+                    className="flex size-9 items-center justify-center"
                     role="link"
                     aria-disabled={!url}
                     href={url}
-                  ></a>
+                  >
+                    <Icon className="size-5 text-indigo-700-v3" />
+                  </a>
                 </li>
               )
             })}
