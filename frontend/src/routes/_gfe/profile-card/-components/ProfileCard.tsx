@@ -16,7 +16,6 @@ export function ProfileCardPage({ children }: { children: React.ReactNode }) {
   )
 }
 
-// TODO: social links, hover, focus, disabled
 type ProfileCardProps = {
   name: string
   title: string
@@ -65,7 +64,7 @@ export function ProfileCard(props: ProfileCardProps) {
             'rounded-sm px-4 py-2.5 font-medium',
             props.profileUrl
               ? 'bg-indigo-700-v3 text-white shadow-(--shadow-profile-card) hover:bg-indigo-800-v3 focus:ring-4 focus:ring-[rgb(68,76,231,0.12)]'
-              : 'pointer-events-none bg-neutral-100 text-neutral-400 select-none',
+              : 'pointer-events-none bg-neutral-100 text-neutral-400',
           )}
         >
           Contact me
@@ -83,10 +82,16 @@ export function ProfileCard(props: ProfileCardProps) {
               return (
                 <li key={platform}>
                   <a
-                    className="flex size-9 items-center justify-center"
+                    className={twJoin(
+                      'flex size-9 items-center justify-center rounded-sm',
+                      url
+                        ? 'hover:bg-neutral-50 focus:bg-neutral-50 focus:ring-4 focus:ring-[rgb(68,76,231,0.12)]'
+                        : 'pointer-events-none',
+                    )}
                     role="link"
                     aria-disabled={!url}
-                    href={url}
+                    href={url || undefined}
+                    aria-label={platform}
                   >
                     <Icon className="size-5 text-indigo-700-v3" />
                   </a>
