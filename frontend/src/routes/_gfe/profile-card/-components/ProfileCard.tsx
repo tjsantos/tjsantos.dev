@@ -1,4 +1,3 @@
-import './ProfileCard.css'
 import {
   RiGithubFill,
   RiInstagramFill,
@@ -93,7 +92,10 @@ export function ProfileCard(props: ProfileCardProps) {
                     href={url || undefined}
                     aria-label={platform}
                   >
-                    <Icon className="size-5 text-indigo-700-v3" />
+                    <Icon
+                      aria-hidden="true"
+                      className="size-5 text-indigo-700-v3"
+                    />
                   </a>
                 </li>
               )
