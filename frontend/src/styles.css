@@ -1,10 +1,12 @@
 @import 'tailwindcss';
 
+/* Tailwind v3 colors used: gray, neutral, red, amber, yellow, green, and indigo.
+ The colors commented out have the same value in v3 and v4. */
 @theme {
   --font-noto-sans: 'Noto Sans', sans-serif;
-  --color-gray-50-v3: #f9fafb;
-  --color-gray-100-v3: #f3f4f6;
-  --color-gray-200-v3: #e5e7eb;
+  /*--color-gray-50-v3: #f9fafb;*/
+  /*--color-gray-100-v3: #f3f4f6;*/
+  /*--color-gray-200-v3: #e5e7eb;*/
   --color-gray-300-v3: #d1d5db;
   --color-gray-400-v3: #9ca3af;
   --color-gray-500-v3: #6b7280;
@@ -12,19 +14,19 @@
   --color-gray-700-v3: #374151;
   --color-gray-800-v3: #1f2937;
   --color-gray-900-v3: #111827;
-  --color-gray-950-v3: #030712;
-  --color-neutral-50-v3: #fafafa;
-  --color-neutral-100-v3: #f5f5f5;
-  --color-neutral-200-v3: #e5e5e5;
-  --color-neutral-300-v3: #d4d4d4;
+  /*--color-gray-950-v3: #030712;*/
+  /*--color-neutral-50-v3: #fafafa;*/
+  /*--color-neutral-100-v3: #f5f5f5;*/
+  /*--color-neutral-200-v3: #e5e5e5;*/
+  /*--color-neutral-300-v3: #d4d4d4;*/
   --color-neutral-400-v3: #a3a3a3;
-  --color-neutral-500-v3: #737373;
-  --color-neutral-600-v3: #525252;
-  --color-neutral-700-v3: #404040;
-  --color-neutral-800-v3: #262626;
-  --color-neutral-900-v3: #171717;
-  --color-neutral-950-v3: #0a0a0a;
-  --color-red-50-v3: #fef2f2;
+  /*--color-neutral-500-v3: #737373;*/
+  /*--color-neutral-600-v3: #525252;*/
+  /*--color-neutral-700-v3: #404040;*/
+  /*--color-neutral-800-v3: #262626;*/
+  /*--color-neutral-900-v3: #171717;*/
+  /*--color-neutral-950-v3: #0a0a0a;*/
+  /*--color-red-50-v3: #fef2f2;*/
   --color-red-100-v3: #fee2e2;
   --color-red-200-v3: #fecaca;
   --color-red-300-v3: #fca5a5;
@@ -35,7 +37,7 @@
   --color-red-800-v3: #991b1b;
   --color-red-900-v3: #7f1d1d;
   --color-red-950-v3: #450a0a;
-  --color-amber-50-v3: #fffbeb;
+  /*--color-amber-50-v3: #fffbeb;*/
   --color-amber-100-v3: #fef3c7;
   --color-amber-200-v3: #fde68a;
   --color-amber-300-v3: #fcd34d;
@@ -46,7 +48,7 @@
   --color-amber-800-v3: #92400e;
   --color-amber-900-v3: #78350f;
   --color-amber-950-v3: #451a03;
-  --color-yellow-50-v3: #fefce8;
+  /*--color-yellow-50-v3: #fefce8;*/
   --color-yellow-100-v3: #fef9c3;
   --color-yellow-200-v3: #fef08a;
   --color-yellow-300-v3: #fde047;
@@ -57,8 +59,8 @@
   --color-yellow-800-v3: #854d0e;
   --color-yellow-900-v3: #713f12;
   --color-yellow-950-v3: #422006;
-  --color-green-50-v3: #f0fdf4;
-  --color-green-100-v3: #dcfce7;
+  /*--color-green-50-v3: #f0fdf4;*/
+  /*--color-green-100-v3: #dcfce7;*/
   --color-green-200-v3: #bbf7d0;
   --color-green-300-v3: #86efac;
   --color-green-400-v3: #4ade80;
@@ -68,8 +70,8 @@
   --color-green-800-v3: #166534;
   --color-green-900-v3: #14532d;
   --color-green-950-v3: #052e16;
-  --color-indigo-50-v3: #eef2ff;
-  --color-indigo-100-v3: #e0e7ff;
+  /*--color-indigo-50-v3: #eef2ff;*/
+  /*--color-indigo-100-v3: #e0e7ff;*/
   --color-indigo-200-v3: #c7d2fe;
   --color-indigo-300-v3: #a5b4fc;
   --color-indigo-400-v3: #818cf8;
