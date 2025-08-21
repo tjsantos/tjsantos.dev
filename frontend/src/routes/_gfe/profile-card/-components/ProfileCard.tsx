@@ -15,21 +15,55 @@ export function ProfileCardPage({ children }: { children: React.ReactNode }) {
   )
 }
 
+type SocialPlatform = 'github' | 'linkedin' | 'twitter' | 'instagram'
+type SocialLink = {
+  platform: SocialPlatform
+  url: string
+}
+const SOCIAL_ICONS = {
+  github: RiGithubFill,
+  linkedin: RiLinkedinBoxFill,
+  instagram: RiInstagramFill,
+  twitter: RiTwitterXFill,
+} as const satisfies Record<SocialPlatform, any>
+function SocialLinkList({ socialLinks }: { socialLinks: Array<SocialLink> }) {
+  return (
+    <ul className="flex flex-wrap items-center justify-center gap-4">
+      {socialLinks.map(({ platform, url }) => {
+        const Icon = SOCIAL_ICONS[platform]
+        return (
+          <li key={platform}>
+            <a
+              className={twJoin(
+                'flex size-9 items-center justify-center rounded-sm',
+                url
+                  ? 'hover:bg-neutral-50 focus:bg-neutral-50 focus:ring-4 focus:ring-[rgb(68,76,231,0.12)]'
+                  : 'pointer-events-none',
+              )}
+              href={url}
+              aria-label={platform}
+            >
+              <Icon aria-hidden="true" className="size-5 text-indigo-700-v3" />
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 type ProfileCardProps = {
   name: string
   title: string
   description: string
   profileUrl?: string
   profileImageUrl: string
-  socialLinks?: {
-    [key: string]: string | undefined
-    github?: string
-    linkedin?: string
-    twitter?: string
-    instagram?: string
-  }
+  socialLinks: Array<SocialLink>
 }
 export function ProfileCard(props: ProfileCardProps) {
+  // Defensively filter out empty url strings
+  const socialLinks = props.socialLinks.filter((link) => link.url)
+
   return (
     <article
       className="flex w-85 flex-col gap-10 rounded-lg bg-white px-4 py-6 text-center text-neutral-600 shadow-(--shadow-profile-card)"
@@ -40,14 +74,16 @@ export function ProfileCard(props: ProfileCardProps) {
         } as CSSProperties
       }
     >
-      <section className="flex flex-col items-center gap-6">
-        <img
-          className="aspect-square w-16 rounded-full object-cover"
-          src={props.profileImageUrl}
-          decoding="async"
-          loading="lazy"
-          alt={props.name}
-        />
+      <section className="flex flex-col items-center gap-6 wrap-anywhere">
+        <figure className="line-clamp-4 size-16 text-xs">
+          <img
+            className="size-full rounded-full object-cover"
+            src={props.profileImageUrl}
+            decoding="async"
+            loading="lazy"
+            alt={`Profile photo of ${props.name}`}
+          />
+        </figure>
         <header className="flex flex-col gap-1">
           <h2 className="text-xl font-medium text-neutral-900">{props.name}</h2>
           <h3 className="text-sm">{props.title}</h3>
@@ -68,39 +104,7 @@ export function ProfileCard(props: ProfileCardProps) {
         >
           Contact me
         </a>
-        <ul className="flex flex-wrap items-center justify-center gap-4">
-          {[
-            { platform: 'github', Icon: RiGithubFill },
-            { platform: 'linkedin', Icon: RiLinkedinBoxFill },
-            { platform: 'instagram', Icon: RiInstagramFill },
-            { platform: 'twitter', Icon: RiTwitterXFill },
-          ]
-            .filter(({ platform }) => props.socialLinks?.[platform])
-            .map(({ platform, Icon }) => {
-              const url = props.socialLinks?.[platform]
-              return (
-                <li key={platform}>
-                  <a
-                    className={twJoin(
-                      'flex size-9 items-center justify-center rounded-sm',
-                      url
-                        ? 'hover:bg-neutral-50 focus:bg-neutral-50 focus:ring-4 focus:ring-[rgb(68,76,231,0.12)]'
-                        : 'pointer-events-none',
-                    )}
-                    role="link"
-                    aria-disabled={!url}
-                    href={url || undefined}
-                    aria-label={platform}
-                  >
-                    <Icon
-                      aria-hidden="true"
-                      className="size-5 text-indigo-700-v3"
-                    />
-                  </a>
-                </li>
-              )
-            })}
-        </ul>
+        {socialLinks.length > 0 && <SocialLinkList socialLinks={socialLinks} />}
       </section>
     </article>
   )

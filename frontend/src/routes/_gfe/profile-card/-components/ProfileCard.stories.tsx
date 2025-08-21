@@ -29,12 +29,12 @@ export const Default: Story = {
       'I turn coffee into bugs which are fixed by someone else. Certified Stack Overflow and ChatGPT developer.',
     profileUrl: '#',
     profileImageUrl: profileImg,
-    socialLinks: {
-      github: '#',
-      linkedin: '#',
-      instagram: '#',
-      twitter: '#',
-    },
+    socialLinks: [
+      { platform: 'github', url: '#' },
+      { platform: 'linkedin', url: '#' },
+      { platform: 'twitter', url: '#' },
+      { platform: 'instagram', url: '#' },
+    ],
   },
 }
 
@@ -45,19 +45,43 @@ export const Disabled: Story = {
   },
 }
 
-export const NoImage: Story = {
-  args: {
-    ...Default.args,
-    profileImageUrl: 'no image',
-  },
-}
-
 export const MissingLinks: Story = {
   args: {
     ...Default.args,
-    socialLinks: {
-      github: '#',
-      instagram: '#',
-    },
+    socialLinks: [
+      { platform: 'github', url: '#' },
+      { platform: 'instagram', url: '#' },
+    ],
+  },
+}
+
+export const EmptyUrls: Story = {
+  args: {
+    ...Default.args,
+    socialLinks: [{ platform: 'github', url: '' }],
+  },
+}
+
+export const NoLinks: Story = {
+  args: {
+    ...Default.args,
+    socialLinks: [],
+  },
+}
+
+export const TextOverflow: Story = {
+  args: {
+    ...Default.args,
+    name: 'SarahDoleWithAVeryLongNameThatMightNotFitInTheCard',
+    description:
+      "This text has VeryLongWordsThatMightNotFitInTheCard but should wrap correctly. Here'sAnotherLongWordThatMightCauseIssuesIfNotHandledProperly.",
+  },
+}
+
+export const NoImage: Story = {
+  args: {
+    ...Default.args,
+    name: TextOverflow.args.name,
+    profileImageUrl: 'no image',
   },
 }
