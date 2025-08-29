@@ -9,6 +9,7 @@ const projects = [
   { name: 'Testimonial Card', path: '/testimonial-card' },
   { name: 'Blog Card', path: '/blog-card' },
   { name: 'Profile Card', path: '/profile-card' },
+  { name: 'Button Component', path: '/button-component' },
 ]
 
 function App() {
