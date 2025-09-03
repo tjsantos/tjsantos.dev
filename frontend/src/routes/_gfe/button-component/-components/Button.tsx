@@ -1,6 +1,6 @@
 import { twJoin } from 'tailwind-merge'
 import { RiStarLine } from 'react-icons/ri'
-import { tw } from '@/utils'
+import { tw } from '@/lib/utils'
 
 type ButtonProps = {
   variant:
@@ -13,20 +13,20 @@ type ButtonProps = {
   children: React.ReactNode
 }
 
-const variantStyles = {
-  primary: tw`bg-indigo-700-v3 text-white hover:bg-indigo-800-v3`,
-  secondary: tw`bg-white text-neutral-700 shadow-sm`,
-  tertiary: tw``,
-  primaryLink: tw``,
-  secondaryLink: tw``,
-} as const satisfies Record<ButtonProps['variant'], string>
+const variantStyles = tw({
+  primary: 'bg-indigo-700-v3 text-white hover:bg-indigo-800-v3',
+  secondary: 'bg-white text-neutral-700 shadow-sm',
+  tertiary: '',
+  primaryLink: '',
+  secondaryLink: '',
+} as const satisfies Record<ButtonProps['variant'], string>)
 
-const sizeStyles = {
-  md: tw`px-4 py-2 text-sm [&_svg]:size-4`,
-  lg: tw`px-5 py-3 text-base`,
-  xl: tw`px-6 py-4 text-lg`,
-  '2xl': tw`px-7 py-5 text-xl`,
-} as const satisfies Record<ButtonProps['size'], string>
+const sizeStyles = tw({
+  md: 'px-4 py-2 text-sm [&_svg]:size-4',
+  lg: 'px-5 py-3 text-base',
+  xl: 'px-6 py-4 text-lg',
+  '2xl': 'px-7 py-5 text-xl',
+} as const satisfies Record<ButtonProps['size'], string>)
 
 export function Button({ variant, size, children }: ButtonProps) {
   return (
