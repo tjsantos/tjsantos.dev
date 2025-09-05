@@ -13,6 +13,7 @@ import { Route as GfeRouteRouteImport } from './routes/_gfe/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GfeTestimonialCardIndexRouteImport } from './routes/_gfe/testimonial-card/index'
 import { Route as GfeProfileCardIndexRouteImport } from './routes/_gfe/profile-card/index'
+import { Route as GfeButtonComponentIndexRouteImport } from './routes/_gfe/button-component/index'
 import { Route as GfeBlogCardIndexRouteImport } from './routes/_gfe/blog-card/index'
 
 const GfeRouteRoute = GfeRouteRouteImport.update({
@@ -34,6 +35,11 @@ const GfeProfileCardIndexRoute = GfeProfileCardIndexRouteImport.update({
   path: '/profile-card/',
   getParentRoute: () => GfeRouteRoute,
 } as any)
+const GfeButtonComponentIndexRoute = GfeButtonComponentIndexRouteImport.update({
+  id: '/button-component/',
+  path: '/button-component/',
+  getParentRoute: () => GfeRouteRoute,
+} as any)
 const GfeBlogCardIndexRoute = GfeBlogCardIndexRouteImport.update({
   id: '/blog-card/',
   path: '/blog-card/',
@@ -43,12 +49,14 @@ const GfeBlogCardIndexRoute = GfeBlogCardIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blog-card': typeof GfeBlogCardIndexRoute
+  '/button-component': typeof GfeButtonComponentIndexRoute
   '/profile-card': typeof GfeProfileCardIndexRoute
   '/testimonial-card': typeof GfeTestimonialCardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blog-card': typeof GfeBlogCardIndexRoute
+  '/button-component': typeof GfeButtonComponentIndexRoute
   '/profile-card': typeof GfeProfileCardIndexRoute
   '/testimonial-card': typeof GfeTestimonialCardIndexRoute
 }
@@ -57,19 +65,31 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_gfe': typeof GfeRouteRouteWithChildren
   '/_gfe/blog-card/': typeof GfeBlogCardIndexRoute
+  '/_gfe/button-component/': typeof GfeButtonComponentIndexRoute
   '/_gfe/profile-card/': typeof GfeProfileCardIndexRoute
   '/_gfe/testimonial-card/': typeof GfeTestimonialCardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blog-card' | '/profile-card' | '/testimonial-card'
+  fullPaths:
+    | '/'
+    | '/blog-card'
+    | '/button-component'
+    | '/profile-card'
+    | '/testimonial-card'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blog-card' | '/profile-card' | '/testimonial-card'
+  to:
+    | '/'
+    | '/blog-card'
+    | '/button-component'
+    | '/profile-card'
+    | '/testimonial-card'
   id:
     | '__root__'
     | '/'
     | '/_gfe'
     | '/_gfe/blog-card/'
+    | '/_gfe/button-component/'
     | '/_gfe/profile-card/'
     | '/_gfe/testimonial-card/'
   fileRoutesById: FileRoutesById
@@ -109,6 +129,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GfeProfileCardIndexRouteImport
       parentRoute: typeof GfeRouteRoute
     }
+    '/_gfe/button-component/': {
+      id: '/_gfe/button-component/'
+      path: '/button-component'
+      fullPath: '/button-component'
+      preLoaderRoute: typeof GfeButtonComponentIndexRouteImport
+      parentRoute: typeof GfeRouteRoute
+    }
     '/_gfe/blog-card/': {
       id: '/_gfe/blog-card/'
       path: '/blog-card'
@@ -121,12 +148,14 @@ declare module '@tanstack/react-router' {
 
 interface GfeRouteRouteChildren {
   GfeBlogCardIndexRoute: typeof GfeBlogCardIndexRoute
+  GfeButtonComponentIndexRoute: typeof GfeButtonComponentIndexRoute
   GfeProfileCardIndexRoute: typeof GfeProfileCardIndexRoute
   GfeTestimonialCardIndexRoute: typeof GfeTestimonialCardIndexRoute
 }
 
 const GfeRouteRouteChildren: GfeRouteRouteChildren = {
   GfeBlogCardIndexRoute: GfeBlogCardIndexRoute,
+  GfeButtonComponentIndexRoute: GfeButtonComponentIndexRoute,
   GfeProfileCardIndexRoute: GfeProfileCardIndexRoute,
   GfeTestimonialCardIndexRoute: GfeTestimonialCardIndexRoute,
 }
