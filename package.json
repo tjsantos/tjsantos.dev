@@ -1,0 +1,23 @@
+{
+  "name": "root",
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "e2e"
+  ],
+  "scripts": {
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "typecheck": "tsc",
+    "check": "npm run format && npm run lint",
+    "fix": "npm run format:fix && npm run lint:fix"
+  },
+  "dependencies": {
+    "@tanstack/eslint-config": "^0.3.1",
+    "eslint": "^9.35.0",
+    "prettier": "^3.6.1",
+    "typescript": "^5.9.2"
+  }
+}

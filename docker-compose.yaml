@@ -1,9 +1,8 @@
-
 services:
   frontend-dev:
     build: ./frontend
     ports:
-      - "${FRONTEND_DEV_PORT:-3000}:${FRONTEND_DEV_PORT:-3000}"
+      - '${FRONTEND_DEV_PORT:-3000}:${FRONTEND_DEV_PORT:-3000}'
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -12,7 +11,7 @@ services:
   storybook-dev:
     build: ./frontend
     ports:
-      - "${STORYBOOK_DEV_PORT:-4000}:${STORYBOOK_DEV_PORT:-4000}"
+      - '${STORYBOOK_DEV_PORT:-4000}:${STORYBOOK_DEV_PORT:-4000}'
     volumes:
       - ./frontend:/app
       - /app/node_modules

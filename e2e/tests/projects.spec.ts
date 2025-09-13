@@ -1,18 +1,14 @@
-import {test, expect} from '@playwright/test';
+import { test, expect } from '@playwright/test'
 
-test('has title', async ({page}) => {
-  await page.goto('/');
+test('has title', async ({ page }) => {
+  await page.goto('/')
 
-  await expect(page).toHaveTitle(/TJ/);
-});
+  await expect(page).toHaveTitle(/TJ/)
+})
 
-const projects = [
-  'testimonial-card',
-  'blog-card',
-  'profile-card'
-]
+const projects = ['testimonial-card', 'blog-card', 'profile-card']
 
-test('main page should link to all projects', async ({page}) => {
+test('main page should link to all projects', async ({ page }) => {
   await page.goto('/')
 
   // TODO prettier, eslint, tsconfig

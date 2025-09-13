@@ -3,7 +3,7 @@ services:
   frontend-preview:
     build: ./frontend
     ports:
-      - "${FRONTEND_PROD_PORT:-5000}:${FRONTEND_PROD_PORT:-5000}"
+      - '${FRONTEND_PROD_PORT:-5000}:${FRONTEND_PROD_PORT:-5000}'
     volumes:
       - ./frontend:/app
       - /app/node_modules
