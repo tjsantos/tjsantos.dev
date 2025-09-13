@@ -1,9 +1,11 @@
 {
   "name": "frontend",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc",
     "build": "vite build && npm run build-storybook",
     "preview": "vite preview",
     "test": "vitest run",

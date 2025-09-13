@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "typecheck": "tsc",
     "test": "playwright test"
   },
   "keywords": [],
@@ -12,6 +13,6 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.0"
+    "@types/node": "^24.3.3"
   }
 }

@@ -1,5 +1,6 @@
 {
   "name": "root",
+  "version": "1.0.0",
   "type": "module",
   "workspaces": [
     "frontend",
@@ -10,8 +11,8 @@
     "format:fix": "prettier --write .",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "typecheck": "tsc",
-    "check": "npm run format && npm run lint",
+    "typecheck": "tsc && npm run typecheck --workspaces",
+    "check": "npm run format && npm run lint && npm run typecheck",
     "fix": "npm run format:fix && npm run lint:fix"
   },
   "dependencies": {
