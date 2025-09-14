@@ -9,7 +9,7 @@ services:
     volumes:
       - ./frontend:/app/frontend
       - /app/node_modules
-    command: sh -c "npm run build && npm run preview -- --port ${FRONTEND_PROD_PORT:-5000} --host"
+    command: sh -c "npm run preview -- --port ${FRONTEND_PROD_PORT:-5000} --host"
     healthcheck:
       test: curl -f http://localhost:${FRONTEND_PROD_PORT:-5000} || exit 1
       interval: 30s
