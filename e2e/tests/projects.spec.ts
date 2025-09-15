@@ -22,6 +22,9 @@ for (const project of projects) {
   test(`screenshot ${project}`, async ({ page }) => {
     await page.goto(`/${project}`)
 
+    const attribution = page.getByText('GreatFrontEnd')
+    await expect(attribution).toBeVisible()
+
     await argosScreenshot(page, project, {
       viewports: [
         'iphone-x', // Mobile 375x812
@@ -34,6 +37,8 @@ for (const project of projects) {
 
 test('screenshot homepage', async ({ page }) => {
   await page.goto('/')
+  const links = page.getByRole('link')
+  await expect(links).toBeVisible()
   await argosScreenshot(page, 'homepage')
 })
 

@@ -61,10 +61,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./frontend
           command: deploy
-      - name: Print wrangler command output
-        env:
-          CMD_OUTPUT: ${{ steps.dev.outputs.command-output || steps.prod.outputs.command-output }}
-        run: echo $CMD_OUTPUT
 
   test-e2e:
     needs: [test, deploy]
@@ -91,5 +87,5 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: playwright-report/
+          path: e2e/playwright-report/
           retention-days: 30
