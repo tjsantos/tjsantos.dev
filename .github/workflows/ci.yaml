@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Format, lint, and typecheck
+        run: npm run check
+      - name: Run tests
+        run: npm run test:frontend
+
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      frontend-url: ${{ steps.dev.outputs.deployment-url || steps.prod.outputs.deployment-url }}
+    environment:
+      name: cloudflare
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build frontend
+        run: npm run build:frontend
+      - name: Deploy dev preview
+        id: dev
+        if: github.ref != 'refs/heads/main'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: ./frontend
+          command: versions upload
+      - name: Deploy to production
+        id: prod
+        if: github.ref == 'refs/heads/main'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: ./frontend
+          command: deploy
+      - name: Print wrangler command output
+        env:
+          CMD_OUTPUT: ${{ steps.dev.outputs.command-output || steps.prod.outputs.command-output }}
+        run: echo $CMD_OUTPUT
+
+  test-e2e:
+    needs: [test, deploy]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: argos
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run e2e tests
+        env:
+          FRONTEND_URL: ${{ needs.deploy.outputs.frontend-url }}
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
