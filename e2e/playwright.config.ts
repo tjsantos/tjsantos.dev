@@ -28,7 +28,10 @@ export default defineConfig({
         ['dot'],
         [
           '@argos-ci/playwright/reporter',
-          createArgosReporterOptions({ uploadToArgos: true }),
+          createArgosReporterOptions({
+            buildName: `argos-playwright-e2e-node-${process.env.NODE_VERSION}-${process.env.OS}`,
+            uploadToArgos: true,
+          }),
         ],
       ]
     : 'list',
