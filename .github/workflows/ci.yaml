@@ -61,7 +61,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./frontend
           command: deploy
-
+  # TODO playwright docker image for fast install
   test-e2e:
     needs: [test, deploy]
     runs-on: ubuntu-latest

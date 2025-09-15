@@ -29,7 +29,7 @@ export default defineConfig({
         [
           '@argos-ci/playwright/reporter',
           createArgosReporterOptions({
-            buildName: `argos-playwright-e2e-node-${process.env.NODE_VERSION}-${process.env.OS}`,
+            buildName: `argos-playwright-e2e-node-${process.version}-${process.platform}`,
             uploadToArgos: true,
           }),
         ],
