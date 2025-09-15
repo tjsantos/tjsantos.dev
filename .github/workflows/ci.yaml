@@ -25,7 +25,9 @@ jobs:
         run: npm run check
       - name: Run tests
         run: npm run test:frontend
-
+  # TODO clickable link from github PR
+  # TODO add data to wrangler deploy
+  # wrangler versions upload --preview-alias ${{ branch-name? }}
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
