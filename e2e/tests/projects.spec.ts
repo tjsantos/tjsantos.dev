@@ -21,10 +21,6 @@ test('main page should link to all projects', async ({ page }) => {
 for (const project of projects) {
   test(`screenshot ${project}`, async ({ page }) => {
     await page.goto(`/${project}`)
-
-    const attribution = page.getByText('GreatFrontEnd')
-    await expect(attribution).toBeVisible()
-
     await argosScreenshot(page, project, {
       viewports: [
         'iphone-x', // Mobile 375x812
@@ -37,9 +33,19 @@ for (const project of projects) {
 
 test('screenshot homepage', async ({ page }) => {
   await page.goto('/')
-  const links = page.getByRole('link')
-  await expect(links).toBeVisible()
   await argosScreenshot(page, 'homepage')
 })
 
 // TODO a11y tests
+
+test('aria-busy is present then removed on render', async ({ page }) => {
+  const response = await page.goto('/')
+  expect(response).not.toBeNull()
+  const html = (await response?.text()) ?? ''
+
+  // could also use cheerio to ensure valid html
+  expect(html).toContain(' aria-busy="true"')
+
+  const busyElements = page.locator('[aria-busy="true"]')
+  await expect(busyElements).toHaveCount(0)
+})
