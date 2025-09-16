@@ -64,13 +64,10 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./frontend
           command: versions upload --preview-alias ${{ format('pr-{0}', github.event.pull_request.number) }}
-        # TODO: check if this env data is added to wrangler deployments
-        env:
-          WORKERS_CI_BRANCH: ${{ github.head_ref }}
-          WORKERS_CI_COMMIT_SHA: ${{ github.sha }}
         continue-on-error: true
 
       - name: (if PR) Log dev preview as completed
+        # always run if on a PR, even if the deploy step failed
         if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -89,6 +86,7 @@ jobs:
           workingDirectory: ./frontend
           command: deploy
 
+  # TODO: a way to preapprove without waiting for other jobs
   test-e2e:
     needs: [test, deploy]
     runs-on: ubuntu-latest
@@ -100,6 +98,10 @@ jobs:
       name: argos
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Force a non-shallow checkout, so that we can reference $GITHUB_BASE_REF.
+          # See https://github.com/actions/checkout for more details.
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with:
           node-version: lts/*
@@ -108,11 +110,18 @@ jobs:
         run: npm ci --workspace=e2e
       - name: Install Playwright Browsers
         run: npx --workspace=e2e playwright install --with-deps chromium
+
+        # https://playwright.dev/docs/ci#fail-fast
+      - name: Run changed Playwright tests
+        run: npx --workspace=e2e playwright test --only-changed=$GITHUB_BASE_REF
+        if: github.event_name == 'pull_request'
+
       - name: Run e2e tests
         env:
           FRONTEND_URL: ${{ needs.deploy.outputs.frontend-url }}
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
-        run: npm run test:e2e
+        run: npm run --workspace=e2e test
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
