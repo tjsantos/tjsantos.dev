@@ -86,9 +86,13 @@ jobs:
           workingDirectory: ./frontend
           command: deploy
 
-  # TODO: a way to preapprove without waiting for other jobs
+  # TODO: separate workflow that listens to deployment request and auto approves if its on main
+  approve-test-e2e:
+    environment:
+      name: approve-test-e2e
+
   test-e2e:
-    needs: [test, deploy]
+    needs: [test, deploy, approve-test-e2e]
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.55.0-noble
