@@ -33,6 +33,7 @@ jobs:
       frontend-url: ${{ steps.dev.outputs.deployment-url || steps.prod.outputs.deployment-url }}
     environment:
       name: cloudflare
+      url: ${{ steps.log.outputs.PR_URL || steps.prod.outputs.deployment-url }}
     permissions:
       pull-requests: write
     steps:
@@ -68,12 +69,18 @@ jobs:
       - name: (if PR) Log dev preview as completed
         # always run if on a PR, even if the deploy step failed
         if: ${{ github.event_name == 'pull_request' && always() }}
+        id: log
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_SHA: ${{ github.sha }}
           COMMIT_URL: ${{ steps.dev.outputs.deployment-url }}
-          PR_URL: ${{ steps.dev.outputs.deployment-alias-url }}
-        run: 'echo "status: error or success\n commit URL: $COMMIT_URL \n PR URL: $PR_URL"'
+          # PR_URL: ${{ steps.dev.outputs.deployment-alias-url }} # TODO: parse from command-output
+          CMD_OUTPUT: ${{ steps.dev.outputs.command-output }}
+        run: |
+          echo "status: error or success"
+          echo "commit URL: $COMMIT_URL"
+          echo "command output: $CMD_OUTPUT"
+          echo "PR_URL=https://pr-${{ github.event.pull_request.number }}-frontend.tjsantos.workers.dev" >> $GITHUB_OUTPUT
 
       - name: (if on main) Deploy to production
         if: github.ref == 'refs/heads/main'
