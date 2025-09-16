@@ -64,11 +64,10 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./frontend
           command: versions upload --preview-alias ${{ format('pr-{0}', github.event.pull_request.number) }}
-        continue-on-error: true
 
       - name: (if PR) Log dev preview as completed
         # always run if on a PR, even if the deploy step failed
-        if: github.event_name == 'pull_request'
+        if: ${{ github.event_name == 'pull_request' && always() }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_SHA: ${{ github.sha }}
@@ -91,6 +90,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: approve-test-e2e
+    steps:
+      - name: Empty job for approval
+        run: echo "This job is here to require an approval before running the e2e tests."
 
   test-e2e:
     needs: [test, deploy, approve-test-e2e]
