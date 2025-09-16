@@ -42,7 +42,7 @@ jobs:
           node-version: lts/*
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --workspace=frontend
 
       - name: (if PR) Log dev preview as pending 
         if: github.event_name == 'pull_request'
@@ -89,10 +89,12 @@ jobs:
           workingDirectory: ./frontend
           command: deploy
 
-  # TODO playwright docker image for fast install
   test-e2e:
     needs: [test, deploy]
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.55.0-noble
+      options: --init --ipc=host
     timeout-minutes: 30
     environment:
       name: argos
@@ -103,9 +105,9 @@ jobs:
           node-version: lts/*
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --workspace=e2e
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+        run: npx --workspace=e2e playwright install --with-deps chromium
       - name: Run e2e tests
         env:
           FRONTEND_URL: ${{ needs.deploy.outputs.frontend-url }}
