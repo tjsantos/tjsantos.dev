@@ -25,16 +25,21 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
     ? [
-        ['dot'],
-        [
-          '@argos-ci/playwright/reporter',
-          createArgosReporterOptions({
-            buildName: `argos-playwright-e2e-node-${process.version}-${process.platform}`,
-            uploadToArgos: true,
-          }),
-        ],
-      ]
-    : 'list',
+      ['github'],
+      ['html', { open: 'never' }],
+      ['@argos-ci/playwright/reporter', createArgosReporterOptions({
+        buildName: `argos-playwright-e2e-node-${process.version}-${process.platform}`,
+        uploadToArgos: true,
+      }),
+      ],
+    ]
+    : [
+      ['list'],
+      ['html'],
+      ['@argos-ci/playwright/reporter', createArgosReporterOptions({
+        buildName: `argos-playwright-e2e-node-${process.version}-${process.platform}`,
+        uploadToArgos: false,
+      })]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
