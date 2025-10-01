@@ -92,8 +92,9 @@ jobs:
           workingDirectory: ./frontend
           command: deploy
 
-  # TODO: separate workflow that listens to deployment request and auto approves if its on main
+  # precondition for certain jobs - github environment that requires manual approval
   approve-test-e2e:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: approve-test-e2e
