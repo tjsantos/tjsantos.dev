@@ -9,12 +9,7 @@ import { Octokit } from 'octokit'
 // Approve pending deployments - needs "Deployments" repository permissions (write)
 // https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#review-pending-deployments-for-a-workflow-run
 
-const octokit = new Octokit({ auth: process.env.GH_PAT, log: console })
-
-octokit.log.debug('Hello, World!')
-octokit.log.debug(`Repository: ${process.env.GITHUB_REPOSITORY}`)
-octokit.log.debug(`Event name: ${process.env.GITHUB_EVENT_NAME}`)
-octokit.log.debug(`Event: ${process.env.GITHUB_EVENT}`)
+const octokit = new Octokit({ auth: process.env.GH_PAT })
 
 const event = JSON.parse(process.env.GITHUB_EVENT || '{}')
 const environmentName = event.deployment.environment

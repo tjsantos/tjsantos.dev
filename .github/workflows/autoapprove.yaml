@@ -1,23 +1,13 @@
 name: Auto Approve
-on: [deployment, deployment_status]
+on: deployment
 
-# https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#review-pending-deployments-for-a-workflow-run
-#
 jobs:
   auto-approve:
-    if: github.event.deployment.environment == 'approve-test-e2e' && github.event.deployment.ref != 'refs/heads/main'
+    if: github.ref != 'refs/heads/main' && github.event.deployment.environment == 'approve-test-e2e'
     environment:
       name: autoapprove
     runs-on: ubuntu-latest
-    permissions:
-      deployments: write
     steps:
-      - name: Echo GitHub context
-        env:
-          GITHUB_REF: ${{ github.ref }}
-        run: |
-          echo "GITHUB_REF: $GITHUB_REF"
-
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
@@ -27,7 +17,8 @@ jobs:
         run: npm ci --workspace=.github/scripts
 
       - name: Run auto approve script
-        run: npm exec --workspace=.github/scripts -- node approve.ts
+        working-directory: .github/scripts
+        run: node approve.ts
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_EVENT: ${{ toJson(github.event) }}
