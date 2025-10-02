@@ -7,11 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     # echo github context for debugging: environment, ref
     steps:
-      env:
-        GITHUB_EVENT: ${{ toJson(github.event) }}
-        GITHUB_EVENT_NAME: ${{ github.event_name }}
-        GITHUB_REF: ${{ github.ref }}
-      run: |
-        echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
-        echo "GITHUB_REF: $GITHUB_REF"
-        echo "GITHUB_EVENT: $GITHUB_EVENT"
+      - name: Echo GitHub context
+        env:
+          GITHUB_EVENT: ${{ toJson(github.event) }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+        run: |
+          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "GITHUB_EVENT: $GITHUB_EVENT"
