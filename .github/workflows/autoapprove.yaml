@@ -1,12 +1,12 @@
 name: Auto Approve
-on: [deployment, deployment_status, deployment_review]
+on: [deployment, deployment_status]
 
 # https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#review-pending-deployments-for-a-workflow-run
 #
 jobs:
   auto-approve:
     # if: github.event.deployment.environment == 'cloudflare' && github.event.deployment.ref == 'refs/heads/main'
-    if: github.event_name == 'deployment_review' || github.event.deployment.environment == 'approve-test-e2e'
+    if: github.event.deployment.environment == 'approve-test-e2e'
     runs-on: ubuntu-latest
     # echo github context for debugging: environment, ref
     steps:
