@@ -27,8 +27,6 @@ jobs:
         run: npm run test:frontend
 
   deploy:
-    # TODO: temporarily disabled while testing github actions
-    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:

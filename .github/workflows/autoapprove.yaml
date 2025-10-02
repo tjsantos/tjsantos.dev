@@ -2,8 +2,9 @@ name: Auto Approve
 on: deployment
 
 jobs:
+  # Auto approve e2e tests on main
   auto-approve:
-    if: github.ref != 'refs/heads/main' && github.event.deployment.environment == 'approve-test-e2e'
+    if: github.ref == 'refs/heads/main' && github.event.deployment.environment == 'approve-test-e2e'
     environment:
       name: autoapprove
     runs-on: ubuntu-latest
