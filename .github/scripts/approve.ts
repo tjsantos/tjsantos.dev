@@ -8,10 +8,13 @@ octokit.log.debug(`Event name: ${process.env.GITHUB_EVENT_NAME}`)
 octokit.log.debug(`Event: ${process.env.GITHUB_EVENT}`)
 
 const event = JSON.parse(process.env.GITHUB_EVENT || '{}')
+const environmentName = event.deployment.environment
 const workflowRunId = event.workflow_run.id
 const [owner, repo] = (process.env.GITHUB_REPOSITORY || '').split('/')
 
-console.log({ workflowRunId, owner, repo })
+octokit.log.debug(
+  JSON.stringify({ environmentName, workflowRunId, owner, repo }),
+)
 
 const pending = await octokit.request(
   'GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments',
@@ -25,7 +28,14 @@ const pending = await octokit.request(
   },
 )
 
-octokit.log.debug(JSON.stringify(pending))
+octokit.log.debug(JSON.stringify(pending, null, 2))
+
+const environmentIds: Array<number> = pending.data
+  .filter((d) => d.environment.name === environmentName)
+  .map((d) => d.environment.id)
+  .filter((id): id is number => Number.isInteger(id)) // type guard to remove undefined
+
+octokit.log.debug(`Environment IDs: ${environmentIds}`)
 
 const approval = await octokit.request(
   'POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments',
@@ -33,7 +43,7 @@ const approval = await octokit.request(
     owner,
     repo,
     run_id: workflowRunId,
-    environment_ids: [161171787],
+    environment_ids: environmentIds,
     state: 'approved',
     comment: 'Automatically approved by github action script.',
     headers: {
@@ -42,4 +52,4 @@ const approval = await octokit.request(
   },
 )
 
-octokit.log.debug(JSON.stringify(approval))
+octokit.log.debug(JSON.stringify(approval, null, 2))

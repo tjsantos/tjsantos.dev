@@ -8,17 +8,14 @@ jobs:
     # if: github.event.deployment.environment == 'cloudflare' && github.event.deployment.ref == 'refs/heads/main'
     if: github.event.deployment.environment == 'approve-test-e2e'
     runs-on: ubuntu-latest
-    # echo github context for debugging: environment, ref
+    permissions:
+      deployments: write
     steps:
       - name: Echo GitHub context
         env:
-          GITHUB_EVENT: ${{ toJson(github.event) }}
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
         run: |
-          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
           echo "GITHUB_REF: $GITHUB_REF"
-          echo "GITHUB_EVENT: $GITHUB_EVENT"
 
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

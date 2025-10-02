@@ -2,6 +2,10 @@
   "name": "github-scripts",
   "version": "1.0.0",
   "description": "Scripts for GitHub workflows",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc"
+  },
   "dependencies": {
     "octokit": "^5.0.3"
   }
