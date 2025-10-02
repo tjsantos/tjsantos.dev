@@ -45,10 +45,11 @@ jobs:
       - name: Install dependencies
         run: npm ci --workspace=frontend
 
+        # TODO create or update PR comment
       - name: (if PR) Log dev preview as pending
         if: github.event_name == 'pull_request'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_SHA: ${{ github.sha }}
         run: 'echo "status: pending for commit $COMMIT_SHA"'
         continue-on-error: true
@@ -66,13 +67,14 @@ jobs:
           workingDirectory: ./frontend
           command: versions upload --preview-alias ${{ format('pr-{0}', github.event.pull_request.number) }}
 
+      # TODO update PR comment
       - name: (if PR) Log dev preview as completed
         # always run if on a PR, even if the deploy step failed
         if: ${{ github.event_name == 'pull_request' && always() }}
         id: log
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMIT_SHA: ${{ github.sha }}
+          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # COMMIT_SHA: ${{ github.sha }}
           COMMIT_URL: ${{ steps.dev.outputs.deployment-url }}
           # PR_URL: ${{ steps.dev.outputs.deployment-alias-url }} # TODO: parse from command-output
           CMD_OUTPUT: ${{ steps.dev.outputs.command-output }}
@@ -94,7 +96,6 @@ jobs:
 
   # precondition for certain jobs - github environment that requires manual approval
   approve-test-e2e:
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: approve-test-e2e
