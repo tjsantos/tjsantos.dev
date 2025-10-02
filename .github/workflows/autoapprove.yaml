@@ -5,8 +5,9 @@ on: [deployment, deployment_status]
 #
 jobs:
   auto-approve:
-    # if: github.event.deployment.environment == 'cloudflare' && github.event.deployment.ref == 'refs/heads/main'
-    if: github.event.deployment.environment == 'approve-test-e2e'
+    if: github.event.deployment.environment == 'approve-test-e2e' && github.event.deployment.ref != 'refs/heads/main'
+    environment:
+      name: autoapprove
     runs-on: ubuntu-latest
     permissions:
       deployments: write
@@ -28,9 +29,9 @@ jobs:
       - name: Run auto approve script
         run: npm exec --workspace=.github/scripts -- node approve.ts
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_EVENT: ${{ toJson(github.event) }}
+          GH_PAT: ${{ secrets.GH_PAT }}
 
       - name: Error message on failure
         if: failure()

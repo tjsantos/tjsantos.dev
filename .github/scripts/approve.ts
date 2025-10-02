@@ -1,6 +1,15 @@
 import { Octokit } from 'octokit'
 
-const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN, log: console })
+// Approving pending deployments requires a token with `deployments: write` permission.
+// This is not possible using `GITHUB_TOKEN`, so we need a personal access token (PAT).
+
+// Get pending deployments - needs "Actions" repository permissions (read)
+// https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#get-pending-deployments-for-a-workflow-run
+
+// Approve pending deployments - needs "Deployments" repository permissions (write)
+// https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#review-pending-deployments-for-a-workflow-run
+
+const octokit = new Octokit({ auth: process.env.GH_PAT, log: console })
 
 octokit.log.debug('Hello, World!')
 octokit.log.debug(`Repository: ${process.env.GITHUB_REPOSITORY}`)
