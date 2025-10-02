@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_EVENT: ${{ github.event }}
+          GITHUB_EVENT: ${{ toJson(github.event) }}
 
       - name: Error message on failure
         if: failure()
