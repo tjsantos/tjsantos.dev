@@ -28,7 +28,7 @@ jobs:
 
   deploy:
     # TODO: temporarily disabled while testing github actions
-    if: false()
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
