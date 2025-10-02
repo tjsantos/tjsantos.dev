@@ -1,0 +1,30 @@
+name: Auto Approve
+on: deployment
+
+jobs:
+  # Auto approve e2e tests on main
+  auto-approve:
+    if: github.ref == 'refs/heads/main' && github.event.deployment.environment == 'approve-test-e2e'
+    environment:
+      name: autoapprove
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --workspace=.github/scripts
+
+      - name: Run auto approve script
+        working-directory: .github/scripts
+        run: node approve.ts
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT: ${{ toJson(github.event) }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+
+      - name: Error message on failure
+        if: failure()
+        run: echo "::error::Auto-approval failed. Please manually approve the deployment."

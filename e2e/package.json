@@ -1,0 +1,20 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "scripts": {
+    "typecheck": "tsc",
+    "test": "playwright test",
+    "debug": "DEBUG=@argos-ci/playwright playwright test",
+    "upload": "argos upload ./screenshots"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@argos-ci/cli": "^3.0.8",
+    "@argos-ci/playwright": "^6.1.5",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.3"
+  }
+}

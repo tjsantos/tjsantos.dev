@@ -1,0 +1,44 @@
+# docker compose -f docker-compose.e2e.yaml up --build --abort-on-container-exit
+# TODO: fix environment variables - port vs url
+services:
+  frontend-preview:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    ports:
+      - '${FRONTEND_TEST_PORT:-5000}:${FRONTEND_TEST_PORT:-5000}'
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+      - /app/frontend/dist
+    command: sh -c "npm run preview -- --port ${FRONTEND_PROD_PORT:-5000} --host"
+    healthcheck:
+      test: curl -f http://localhost:${FRONTEND_PROD_PORT:-5000} || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+      start_interval: 3s
+
+  e2e-tests:
+    build:
+      context: .
+      dockerfile: e2e.Dockerfile
+    depends_on:
+      frontend-preview:
+        condition: service_healthy
+    environment:
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:5000}
+      - CI=${CI}
+      - ARGOS_TOKEN=${ARGOS_TOKEN}
+    volumes:
+      - ./e2e:/app/e2e
+      - /app/e2e/node_modules
+    command: npm run test
+    network_mode: host
+    # https://playwright.dev/docs/docker#recommended-docker-configuration
+    init: true
+    ipc: host
+    # If seeing weird errors when launching Chromium
+    # cap_add:
+    #   - SYS_ADMIN

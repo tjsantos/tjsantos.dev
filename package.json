@@ -1,0 +1,33 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "e2e",
+    ".github/scripts"
+  ],
+  "scripts": {
+    "format": "prettier --check .",
+    "lint": "eslint",
+    "typecheck": "tsc && npm run typecheck --workspaces",
+    "check": "npm run format && npm run lint && npm run typecheck",
+    "fix:format": "prettier --write .",
+    "fix:lint": "eslint --fix",
+    "fix": "npm run fix:format && npm run fix:lint",
+    "test:frontend": "npm run --workspace=frontend test",
+    "test:e2e": "npm run --workspace=e2e test",
+    "test:e2e-local": "docker compose -f docker-compose.e2e.yaml up --build --abort-on-container-exit",
+    "test": "npm run test:frontend && npm run test:e2e-local",
+    "build:frontend": "npm run --workspace=frontend build",
+    "sync-lockfile:frontend": "docker compose -f docker-compose.e2e.yaml run --rm frontend-preview npm install",
+    "sync-lockfile:e2e": "docker compose -f docker-compose.e2e.yaml run --rm --no-deps e2e-tests npm install",
+    "sync-lockfiles": "npm run sync-lockfile:frontend && npm run sync-lockfile:e2e"
+  },
+  "dependencies": {
+    "@tanstack/eslint-config": "^0.3.1",
+    "eslint": "^9.35.0",
+    "prettier": "^3.6.1",
+    "typescript": "^5.9.2"
+  }
+}
