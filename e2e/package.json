@@ -1,8 +1,6 @@
 {
   "name": "e2e",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "typecheck": "tsc",
     "test": "playwright test",
@@ -12,7 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@argos-ci/cli": "^3.0.8",
     "@argos-ci/playwright": "^6.1.5",

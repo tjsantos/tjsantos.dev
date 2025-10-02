@@ -4,7 +4,8 @@
   "type": "module",
   "workspaces": [
     "frontend",
-    "e2e"
+    "e2e",
+    ".github/scripts"
   ],
   "scripts": {
     "format": "prettier --check .",
